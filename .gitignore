@@ -1,2 +1,9 @@
 node_modules
+<<<<<<< HEAD
 .env
+=======
+>>>>>>> abfc7f8 (Add mobile folder to main CryingSense repo)
+node_modules/
+.expo/
+dist/
+/*.log

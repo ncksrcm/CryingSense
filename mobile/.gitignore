@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
@@ -12,11 +13,18 @@ expo-env.d.ts
 # Native
 .kotlin/
 *.orig.*
+=======
+node_modules/
+.expo/
+dist/
+npm-debug.*
+>>>>>>> abfc7f8 (Add mobile folder to main CryingSense repo)
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
+<<<<<<< HEAD
 
 # Metro
 .metro-health-check*
@@ -41,3 +49,19 @@ app-example
 # generated native folders
 /ios
 /android
+=======
+*.orig.*
+web-build/
+
+
+
+
+ios
+android
+
+# macOS
+.DS_Store
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+>>>>>>> abfc7f8 (Add mobile folder to main CryingSense repo)

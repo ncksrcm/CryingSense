@@ -1,5 +1,6 @@
 {
   "expo": {
+<<<<<<< HEAD
     "name": "mobile",
     "slug": "mobile",
     "version": "1.0.0",
@@ -8,11 +9,39 @@
     "scheme": "mobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+=======
+    "name": "CryingSense",
+    "slug": "CryingSense",
+    "version": "1.0.0",
+
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+
+    "experiments": {
+      "tsconfigPaths": true
+    },
+
+    "plugins": [],
+
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+
+    "userInterfaceStyle": "light",
+
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+>>>>>>> abfc7f8 (Add mobile folder to main CryingSense repo)
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
+<<<<<<< HEAD
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
@@ -43,6 +72,11 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+=======
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+>>>>>>> abfc7f8 (Add mobile folder to main CryingSense repo)
     }
   }
 }

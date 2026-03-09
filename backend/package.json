@@ -9,6 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
   "type": "commonjs",
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
@@ -21,5 +22,11 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mongoose": "^9.1.5"
+=======
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+>>>>>>> abfc7f8 (Add mobile folder to main CryingSense repo)
   }
 }
