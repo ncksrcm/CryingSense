@@ -2,26 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, Switch, Linking, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '../navigation/HomeStack';
-import { RootStackParamList } from '../../App';
-import { CompositeNavigationProp } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { useBaby } from '../context/BabyContext';
-import styles from '../styles/AppStyles';
-
-type SettingsScreenNavigationProp = CompositeNavigationProp<
-  NativeStackNavigationProp<HomeStackParamList, 'SettingsScreen'>,
-  NativeStackNavigationProp<RootStackParamList>
->;
+import { useTheme } from '../context/ThemeContext';
+import GradientBackground from '../components/GradientBackground';
+import { useThemedStyles } from '../styles/ThemedStyles';
 
 export default function SettingsScreen() {
-  const navigation = useNavigation<SettingsScreenNavigationProp>();
+  const router = useRouter();
   const { profile } = useBaby();
+  const { theme, setTheme, isDark } = useTheme();
+  const styles = useThemedStyles();
 
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
 
   // Load saved settings
   useEffect(() => {
@@ -31,11 +25,9 @@ export default function SettingsScreen() {
   const loadSettings = async () => {
     const notif = await AsyncStorage.getItem('notifications');
     const sound = await AsyncStorage.getItem('sound');
-    const dark = await AsyncStorage.getItem('darkMode');
 
     if (notif !== null) setNotificationsEnabled(JSON.parse(notif));
     if (sound !== null) setSoundEnabled(JSON.parse(sound));
-    if (dark !== null) setDarkMode(JSON.parse(dark));
   };
 
   // Save settings
@@ -49,9 +41,8 @@ export default function SettingsScreen() {
     await AsyncStorage.setItem('sound', JSON.stringify(value));
   };
 
-  const toggleDarkMode = async (value: boolean) => {
-    setDarkMode(value);
-    await AsyncStorage.setItem('darkMode', JSON.stringify(value));
+  const toggleDarkMode = (value: boolean) => {
+    setTheme(value ? 'dark' : 'light');
   };
 
   const handleHelpSupport = () => {
@@ -93,21 +84,20 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="close" size={28} color="#333" />
-        </TouchableOpacity>
-        <Text style={styles.sectionTitle}>Settings</Text>
-        <View style={{ width: 28 }} />
-      </View>
+    <GradientBackground>
+      <ScrollView style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={{ width: 28 }} />
+          <Text style={styles.sectionTitle}>Settings</Text>
+          <View style={{ width: 28 }} />
+        </View>
 
       {/* Baby Profile */}
       <Text style={styles.sectionTitle}>Baby Profile</Text>
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate('EditBabyProfileScreen')}>
+        onPress={() => router.push('/edit-baby-profile')}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {profile?.photo ? (
             <Image
@@ -143,7 +133,7 @@ export default function SettingsScreen() {
 
       <View style={styles.preferenceRow}>
         <Text style={styles.preferenceText}>Dark Mode</Text>
-        <Switch value={darkMode} onValueChange={toggleDarkMode} />
+        <Switch value={isDark} onValueChange={toggleDarkMode} />
       </View>
 
       {/* Support */}
@@ -158,6 +148,7 @@ export default function SettingsScreen() {
         <Text style={styles.cardTitle}>Privacy Policy</Text>
         <Ionicons name="chevron-forward" size={24} color="#666" />
       </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
+    </GradientBackground>
   );
 }

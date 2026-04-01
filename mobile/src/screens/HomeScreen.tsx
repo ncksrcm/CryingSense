@@ -1,12 +1,18 @@
 // screens/HomeScreen.tsx
 import React from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image } from 'react-native';
 import { useBaby } from '../context/BabyContext';
-import styles from '../styles/AppStyles';
+import GradientBackground from '../components/GradientBackground';
+import { useThemedStyles } from '../styles/ThemedStyles';
+import { useTheme } from '../context/ThemeContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
-export default function HomeScreen({ navigation }: any) {
+export default function HomeScreen() {
+  const router = useRouter();
   const { profile, cryEvents } = useBaby();
+  const styles = useThemedStyles();
+  const { colors } = useTheme();
 
   const today = new Date();
   const todayEvents = cryEvents.filter((e) => e.timestamp.toDateString() === today.toDateString());
@@ -19,17 +25,31 @@ export default function HomeScreen({ navigation }: any) {
     Object.keys(topNeed).reduce((a, b) => (topNeed[a] > topNeed[b] ? a : b), '') || 'None';
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Logo as Settings Button */}
-      <TouchableOpacity
-        onPress={() => navigation.navigate('SettingsScreen')}
-        style={{ marginBottom: 12, marginTop: 8, alignSelf: 'flex-start', marginLeft: -40 }}>
-        <Image
-          source={require('../../assets/images/logo.png')}
-          style={{ width: 140, height: 70 }}
-          resizeMode="contain"
-        />
-      </TouchableOpacity>
+    <GradientBackground>
+      <ScrollView style={styles.container}>
+        {/* Logo with App Name */}
+        <View style={{ 
+          flexDirection: 'row', 
+          alignItems: 'center', 
+          marginBottom: 12, 
+          marginTop: 8, 
+          alignSelf: 'flex-start', 
+          marginLeft: -40 
+        }}>
+          <Image
+            source={require('../../assets/images/logo.png')}
+            style={{ width: 140, height: 70 }}
+            resizeMode="contain"
+          />
+          <Text style={{ 
+            fontSize: 24, 
+            fontWeight: 'bold', 
+            color: colors.sectionTitle, 
+            marginLeft: -8 
+          }}>
+            Crying Sense
+          </Text>
+        </View>
 
       {/* Baby Info Card */}
       <View style={styles.card}>
@@ -82,6 +102,7 @@ export default function HomeScreen({ navigation }: any) {
           <Text>{event.timestamp.toLocaleTimeString()}</Text>
         </View>
       ))}
-    </ScrollView>
+      </ScrollView>
+    </GradientBackground>
   );
 }

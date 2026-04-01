@@ -5,6 +5,7 @@ import RecordScreen from '../screens/RecordScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Home, Mic, Clock } from 'lucide-react-native';
+import { useTheme } from '../context/ThemeContext';
 
 type TabParamList = {
   HomeStack: undefined;
@@ -15,13 +16,20 @@ type TabParamList = {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function BottomTabs() {
+  const { colors } = useTheme();
+
   return (
     <Tab.Navigator
       initialRouteName="HomeStack"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: [styles.tabBar, { height: 56, paddingBottom: 0 }],
+        tabBarStyle: [styles.tabBar, { 
+          height: 56, 
+          paddingBottom: 0,
+          backgroundColor: colors.cardBackground,
+          shadowColor: colors.shadow,
+        }],
       }}>
       <Tab.Screen
         name="HomeStack"
@@ -29,7 +37,7 @@ export default function BottomTabs() {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Home color={focused ? '#2563EB' : '#374151'} size={20} />
+              <Home color={focused ? colors.tabIconSelected : colors.tabIconDefault} size={20} />
             </View>
           ),
         }}
@@ -44,7 +52,7 @@ export default function BottomTabs() {
               accessibilityRole={props.accessibilityRole}
               accessibilityState={props.accessibilityState}
               onPress={props.onPress}
-              style={[styles.fabButton, { backgroundColor: '#60A5FA' }]}
+              style={[styles.fabButton, { backgroundColor: colors.buttonBackground }]}
               activeOpacity={0.85}
               delayLongPress={undefined} // ⚡ important fix
             >
@@ -60,7 +68,7 @@ export default function BottomTabs() {
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Clock color={focused ? '#2563EB' : '#374151'} size={20} />
+              <Clock color={focused ? colors.tabIconSelected : colors.tabIconDefault} size={20} />
             </View>
           ),
         }}

@@ -9,12 +9,14 @@ type ThemeContextType = {
   colors: typeof Colors.light | typeof Colors.dark;
   setTheme: (theme: Theme) => void;
   isDark: boolean;
+  isLoading: boolean;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     loadTheme();
@@ -28,6 +30,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error('Error loading theme:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -40,7 +44,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const isDark = theme === 'dark';
 
   return (
-    <ThemeContext.Provider value={{ theme, colors, setTheme, isDark }}>
+    <ThemeContext.Provider value={{ theme, colors, setTheme, isDark, isLoading }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useBaby } from '../context/BabyContext';
-import styles from '../styles/AppStyles';
+import GradientBackground from '../components/GradientBackground';
+import { useThemedStyles } from '../styles/ThemedStyles';
 
 type FilterOption = 'All' | 'Today' | 'Yesterday' | 'Week';
 
 export default function HistoryAndInsightsScreen({ navigation }: any) {
   const { cryEvents } = useBaby();
   const [filter, setFilter] = useState<FilterOption>('All');
+  const styles = useThemedStyles();
 
   // Filter logic
   const filteredEvents = cryEvents.filter((event) => {
@@ -44,15 +46,14 @@ export default function HistoryAndInsightsScreen({ navigation }: any) {
   );
 
   return (
-    <View style={styles.container}>
-      {/* -------- Header -------- */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="close" size={28} color="#333" />
-        </TouchableOpacity>
-        <Text style={styles.sectionTitle}>History & Insights</Text>
-        <View style={{ width: 28 }} /> {/* placeholder for alignment */}
-      </View>
+    <GradientBackground>
+      <View style={styles.container}>
+        {/* -------- Header -------- */}
+        <View style={styles.header}>
+          <View style={{ width: 28 }} />
+          <Text style={styles.sectionTitle}>History & Insights</Text>
+          <View style={{ width: 28 }} /> {/* placeholder for alignment */}
+        </View>
 
       {/* -------- Filter Options -------- */}
       <View style={{ flexDirection: 'row', marginBottom: 12 }}>
@@ -79,6 +80,7 @@ export default function HistoryAndInsightsScreen({ navigation }: any) {
         renderItem={renderRecording}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
-    </View>
+      </View>
+    </GradientBackground>
   );
 }

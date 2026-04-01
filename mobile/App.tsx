@@ -5,6 +5,7 @@ import BottomTabs from './src/navigation/BottomTabs';
 import AnalysisResultScreen from './src/screens/AnalysisResultScreen';
 import EditBabyProfileScreen from './src/screens/EditBabyProfileScreen';
 import { BabyProvider } from './src/context/BabyContext';
+import { ThemeProvider } from './src/context/ThemeContext';
 
 export type RootStackParamList = {
   MainTabs: undefined;
@@ -16,14 +17,16 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <BabyProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="MainTabs" component={BottomTabs} />
-          <Stack.Screen name="AnalysisResultScreen" component={AnalysisResultScreen} />
-          <Stack.Screen name="EditBabyProfileScreen" component={EditBabyProfileScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </BabyProvider>
+    <ThemeProvider>
+      <BabyProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="MainTabs" component={BottomTabs} />
+            <Stack.Screen name="AnalysisResultScreen" component={AnalysisResultScreen} />
+            <Stack.Screen name="EditBabyProfileScreen" component={EditBabyProfileScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </BabyProvider>
+    </ThemeProvider>
   );
 }
